@@ -4,6 +4,8 @@ import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
@@ -64,7 +66,7 @@ class ParkingLotTest {
     void should_return_nothing_with_error_message_when_fetch_given_a_parking_lot_and_an_unrecognized_ticket() {
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        Ticket unrecognizedTicket = new Ticket();
+        Ticket unrecognizedTicket = new Ticket(CarPlateGenerator.generatePlate(), 1 ,1);
         // When
         // Then
         UnrecognizedTicketException exception = assertThrows(UnrecognizedTicketException.class, () -> parkingLot.fetch(unrecognizedTicket));
@@ -84,5 +86,21 @@ class ParkingLotTest {
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
+
+    @Test
+    void should_return_ticks_list_when_getTickets_given_a_some_parked_cars(){
+        // Given
+        ParkingLot parkingLot = new ParkingLot();
+        Car car1 = new Car(CarPlateGenerator.generatePlate());
+        Car car2 = new Car(CarPlateGenerator.generatePlate());
+        Ticket ticket1 = parkingLot.park(car1);
+        Ticket ticket2 = parkingLot.park(car2);
+        List<Ticket> expectedTickets = List.of(ticket1, ticket2);
+        // When
+        List<Ticket> tickets = parkingLot.getTickets();
+        // Then
+        assertNotNull(tickets);
+        assertTrue(expectedTickets.containsAll(tickets));
+    }
 
 }

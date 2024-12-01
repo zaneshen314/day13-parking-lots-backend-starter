@@ -5,6 +5,7 @@ import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ParkingLot {
@@ -38,7 +39,7 @@ public class ParkingLot {
     public Ticket park(Car car) {
         if(isFull()) throw new NoAvailablePositionException();
 
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket(car.plateNumber(), tickets.size() + 1, this.id);
         tickets.put(ticket, car);
         return ticket;
     }
@@ -69,8 +70,8 @@ public class ParkingLot {
         return id;
     }
 
-    public Map<Ticket, Car> getParkingTickets() {
-        return tickets;
+    public List<Ticket> getTickets() {
+        return tickets.keySet().stream().toList();
     }
 
 }
