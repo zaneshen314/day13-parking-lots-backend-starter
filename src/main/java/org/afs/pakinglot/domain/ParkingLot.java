@@ -1,12 +1,11 @@
 package org.afs.pakinglot.domain;
 
 
-import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
-import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
+import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 
 public class ParkingLot {
     private int id;
@@ -29,33 +28,39 @@ public class ParkingLot {
         this.name = name;
         this.capacity = capacity;
     }
+
     public int getCapacity() {
         return capacity;
     }
+
     public int getAvailableCapacity() {
         return capacity - tickets.size();
     }
 
     public Ticket park(Car car) {
-        if(isFull()) throw new NoAvailablePositionException();
+        if (isFull()) {
+            throw new NoAvailablePositionException();
+        }
 
         Ticket ticket = new Ticket(car.plateNumber(), tickets.size() + 1, this.id);
         tickets.put(ticket, car);
         return ticket;
     }
+
     public boolean isFull() {
         return capacity == tickets.size();
     }
 
     public Car fetch(Ticket ticket) {
-        if(!tickets.containsKey(ticket))
+        if (!tickets.containsKey(ticket)) {
             throw new UnrecognizedTicketException();
+        }
 
         return tickets.remove(ticket);
     }
 
     public boolean contains(Ticket ticket) {
-       return tickets.containsKey(ticket);
+        return tickets.containsKey(ticket);
     }
 
     public double getAvailablePositionRate() {

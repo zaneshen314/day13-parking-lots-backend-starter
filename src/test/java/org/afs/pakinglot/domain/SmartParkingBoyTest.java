@@ -1,16 +1,15 @@
 package org.afs.pakinglot.domain;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 import org.afs.pakinglot.domain.strategies.MaxAvailableStrategy;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class SmartParkingBoyTest {
     @Test
-    void should_park_car_to_parking_lot_with_more_empty_positions_when_park_given_2_parking_lots(){
+    void should_park_car_to_parking_lot_with_more_empty_positions_when_park_given_2_parking_lots() {
         // Given
         ParkingLot parkingLot1 = new ParkingLot();
         ParkingLot parkingLot2 = new ParkingLot();
@@ -25,7 +24,7 @@ class SmartParkingBoyTest {
     }
 
     @Test
-    void should_park_car_to_first_parking_lot_when_park_given_2_parking_lots_have_same_number_of_empty_position(){
+    void should_park_car_to_first_parking_lot_when_park_given_2_parking_lots_have_same_number_of_empty_position() {
         // Given
         ParkingLot parkingLot1 = new ParkingLot();
         ParkingLot parkingLot2 = new ParkingLot();

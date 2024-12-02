@@ -1,12 +1,13 @@
 package org.afs.pakinglot.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StandardParkingBoyTest {
     @Test
@@ -56,11 +57,11 @@ class StandardParkingBoyTest {
         // Given
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
-        Ticket wrongTicket = new Ticket(CarPlateGenerator.generatePlate(), 1, 1 );
+        Ticket wrongTicket = new Ticket(CarPlateGenerator.generatePlate(), 1, 1);
         // When
         // Then
         UnrecognizedTicketException exception =
-                assertThrows(UnrecognizedTicketException.class, () -> parkingBoy.fetch(wrongTicket));
+            assertThrows(UnrecognizedTicketException.class, () -> parkingBoy.fetch(wrongTicket));
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
@@ -75,7 +76,7 @@ class StandardParkingBoyTest {
         // When
         // Then
         UnrecognizedTicketException exception =
-                assertThrows(UnrecognizedTicketException.class, () -> parkingBoy.fetch(ticket));
+            assertThrows(UnrecognizedTicketException.class, () -> parkingBoy.fetch(ticket));
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
@@ -91,7 +92,7 @@ class StandardParkingBoyTest {
         // When
         // Then
         NoAvailablePositionException exception =
-                assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
+            assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
         assertEquals("No available position.", exception.getMessage());
     }
 

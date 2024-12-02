@@ -1,12 +1,14 @@
 package org.afs.pakinglot.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
     @Test
@@ -58,7 +60,8 @@ class ParkingLotTest {
         Car car = new Car(CarPlateGenerator.generatePlate());
         // When
         // Then
-        NoAvailablePositionException exception = assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(car));
+        NoAvailablePositionException exception =
+            assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(car));
         assertEquals("No available position.", exception.getMessage());
     }
 
@@ -66,10 +69,11 @@ class ParkingLotTest {
     void should_return_nothing_with_error_message_when_fetch_given_a_parking_lot_and_an_unrecognized_ticket() {
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        Ticket unrecognizedTicket = new Ticket(CarPlateGenerator.generatePlate(), 1 ,1);
+        Ticket unrecognizedTicket = new Ticket(CarPlateGenerator.generatePlate(), 1, 1);
         // When
         // Then
-        UnrecognizedTicketException exception = assertThrows(UnrecognizedTicketException.class, () -> parkingLot.fetch(unrecognizedTicket));
+        UnrecognizedTicketException exception =
+            assertThrows(UnrecognizedTicketException.class, () -> parkingLot.fetch(unrecognizedTicket));
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
@@ -82,13 +86,14 @@ class ParkingLotTest {
         parkingLot.fetch(ticket);
         // When
         // Then
-        UnrecognizedTicketException exception = assertThrows(UnrecognizedTicketException.class, () -> parkingLot.fetch(ticket));
+        UnrecognizedTicketException exception =
+            assertThrows(UnrecognizedTicketException.class, () -> parkingLot.fetch(ticket));
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
 
     @Test
-    void should_return_ticks_list_when_getTickets_given_a_some_parked_cars(){
+    void should_return_ticks_list_when_getTickets_given_a_some_parked_cars() {
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Car car1 = new Car(CarPlateGenerator.generatePlate());

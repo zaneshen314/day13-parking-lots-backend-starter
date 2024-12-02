@@ -1,11 +1,10 @@
 package org.afs.pakinglot.domain;
 
-import org.afs.pakinglot.domain.strategies.AvailableRateStrategy;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.afs.pakinglot.domain.strategies.AvailableRateStrategy;
+import org.junit.jupiter.api.Test;
 
 class SuperParkingBoyTest {
     @Test
