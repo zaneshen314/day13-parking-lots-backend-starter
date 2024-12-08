@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
+
+import org.afs.pakinglot.domain.entity.Car;
+import org.afs.pakinglot.domain.entity.ParkingBoy;
+import org.afs.pakinglot.domain.entity.ParkingLot;
+import org.afs.pakinglot.domain.entity.Ticket;
 import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
 import org.junit.jupiter.api.Test;

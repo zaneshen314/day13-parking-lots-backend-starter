@@ -1,4 +1,4 @@
-package org.afs.pakinglot.domain;
+package org.afs.pakinglot.domain.entity;
 
 
 import java.util.ArrayList;
