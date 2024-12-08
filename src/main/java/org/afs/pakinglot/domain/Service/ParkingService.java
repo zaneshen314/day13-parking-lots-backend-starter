@@ -4,6 +4,7 @@ import org.afs.pakinglot.domain.constant.StrategyConstant;
 import org.afs.pakinglot.domain.entity.Car;
 import org.afs.pakinglot.domain.entity.ParkingLot;
 import org.afs.pakinglot.domain.entity.Ticket;
+import org.afs.pakinglot.domain.entity.bo.TicketBo;
 import org.afs.pakinglot.domain.entity.vo.TicketVo;
 import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
@@ -56,6 +57,20 @@ public class ParkingService {
         ticketRepository.save(ticket);
         parkingLotRepository.save(parkingLot);
         return ticketToVo(ticket);
+    }
+
+    public TicketVo fetch(TicketBo ticket) {
+        Ticket ticketEntity = ticketRepository.findByPlateNumber(ticket.getPlateNumber());
+        if (ticketEntity == null) {
+            throw new UnrecognizedTicketException();
+        }
+        ticketRepository.deleteById(ticketEntity.getId());
+        TicketVo ticketVo = new TicketVo();
+        ticketVo.setPlateNumber(ticketEntity.getPlateNumber());
+        ticketVo.setPosition(ticketEntity.getPosition());
+        ticketVo.setId(ticketEntity.getId());
+        ticketVo.setParkingLotId(ticketEntity.getParkingLot().getId());
+        return ticketVo;
     }
 
 
