@@ -5,6 +5,7 @@ import org.afs.pakinglot.domain.entity.Car;
 import org.afs.pakinglot.domain.entity.ParkingLot;
 import org.afs.pakinglot.domain.entity.Ticket;
 import org.afs.pakinglot.domain.entity.bo.TicketBo;
+import org.afs.pakinglot.domain.entity.vo.ParkingLotVo;
 import org.afs.pakinglot.domain.entity.vo.TicketVo;
 import org.afs.pakinglot.domain.exception.NoAvailablePositionException;
 import org.afs.pakinglot.domain.exception.UnrecognizedTicketException;
@@ -73,6 +74,30 @@ public class ParkingService {
         return ticketVo;
     }
 
+    public List<ParkingLotVo> getParkingLots() {
+        List<ParkingLot> parkingLots = parkingLotRepository.findAll();
+        return parkingLots.stream().map(parkingLot -> {
+            Integer slots = ticketRepository.countByParkingLotId(parkingLot.getId());
+            ParkingLotVo parkingLotVo = new ParkingLotVo();
+            parkingLotVo.setId(parkingLot.getId());
+            parkingLotVo.setName(parkingLot.getName());
+            parkingLotVo.setCapacity(parkingLot.getCapacity());
+            parkingLotVo.setCurrentSlots(slots);
+            parkingLotVo.setTickets(ticketToVo(parkingLot));
+            return parkingLotVo;
+        }).toList();
+    }
+
+    private List<TicketVo> ticketToVo(ParkingLot parkingLot) {
+        return ticketRepository.findByParkingLotId(parkingLot.getId()).stream().map(ticket -> {
+            TicketVo ticketVo = new TicketVo();
+            ticketVo.setPlateNumber(ticket.getPlateNumber());
+            ticketVo.setPosition(ticket.getPosition());
+            ticketVo.setId(ticket.getId());
+            ticketVo.setParkingLotId(ticket.getParkingLot().getId());
+            return ticketVo;
+        }).toList();
+    }
 
     private TicketVo ticketToVo(Ticket ticket) {
         TicketVo ticketVo = new TicketVo();

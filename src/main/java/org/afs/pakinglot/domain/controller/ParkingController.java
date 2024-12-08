@@ -3,6 +3,7 @@ package org.afs.pakinglot.domain.controller;
 import org.afs.pakinglot.domain.Service.ParkingService;
 import org.afs.pakinglot.domain.entity.Car;
 import org.afs.pakinglot.domain.entity.bo.TicketBo;
+import org.afs.pakinglot.domain.entity.vo.ParkingLotVo;
 import org.afs.pakinglot.domain.entity.vo.TicketVo;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -26,5 +27,10 @@ public class ParkingController {
     @PostMapping("/fetch")
     public TicketVo fetch(@RequestBody TicketBo ticketBo) {
         return parkingService.fetch(ticketBo);
+    }
+
+    @GetMapping
+    public List<ParkingLotVo> getParkingLots() {
+        return parkingService.getParkingLots();
     }
 }
