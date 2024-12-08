@@ -2,6 +2,8 @@ package org.afs.pakinglot.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Ticket {
 
@@ -12,6 +14,10 @@ public class Ticket {
     private String plateNumber;
 
     private Integer position;
+
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "parkingLot_id")
@@ -24,7 +30,10 @@ public class Ticket {
         this.plateNumber = plateNumber;
         this.position = position;
         this.parkingLot = parkingLot;
+        this.startTime = LocalDateTime.now();
     }
+
+
 
     public Integer getId() {
         return id;
@@ -56,5 +65,21 @@ public class Ticket {
 
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 }

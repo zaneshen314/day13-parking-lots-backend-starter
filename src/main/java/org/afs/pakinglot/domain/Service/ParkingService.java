@@ -15,6 +15,7 @@ import org.afs.pakinglot.domain.strategies.ParkingStrategy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -65,12 +66,20 @@ public class ParkingService {
         if (ticketEntity == null) {
             throw new UnrecognizedTicketException();
         }
+        ticketEntity.setEndTime(LocalDateTime.now());
+        ticketRepository.save(ticketEntity);
         ticketRepository.deleteById(ticketEntity.getId());
+
+        long durationInMinutes = java.time.Duration.between(ticketEntity.getStartTime(), ticketEntity.getEndTime()).toMinutes();
+        long hours = (durationInMinutes + 59) / 60;
+        double cost = hours * 5.0;
+
         TicketVo ticketVo = new TicketVo();
         ticketVo.setPlateNumber(ticketEntity.getPlateNumber());
         ticketVo.setPosition(ticketEntity.getPosition());
         ticketVo.setId(ticketEntity.getId());
         ticketVo.setParkingLotId(ticketEntity.getParkingLot().getId());
+        ticketVo.setCost(cost);
         return ticketVo;
     }
 
