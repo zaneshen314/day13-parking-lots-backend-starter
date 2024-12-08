@@ -66,8 +66,6 @@ public class ParkingControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(StrategyConstant.SMART_PARKING_BOY_STRATEGY));
     }
 
-
-
     @Test
     void should_return_ticket_when_park_given_car_and_strategy() throws Exception {
         // Given
@@ -319,4 +317,22 @@ public class ParkingControllerTest {
         } catch (Exception ignore) {
         }
     }
+
+    @Test
+    void should_return_parking_lots_when_get_all_given_parking_lots_exist() throws Exception {
+        //given
+        final List<ParkingLot> givenParkingLots = parkingLotRepository.findAll();
+
+        //when
+        //then
+        client.perform(MockMvcRequestBuilders.get("/parking"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(givenParkingLots.get(0).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].capacity").value(givenParkingLots.get(0).getCapacity()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(givenParkingLots.get(1).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].capacity").value(givenParkingLots.get(1).getCapacity()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].name").value(givenParkingLots.get(2).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].capacity").value(givenParkingLots.get(2).getCapacity()));
+    }
+
 }
