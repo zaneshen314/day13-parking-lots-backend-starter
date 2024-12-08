@@ -1,5 +1,6 @@
 package org.afs.pakinglot.domain.entity.vo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TicketVo {
@@ -8,6 +9,8 @@ public class TicketVo {
     private int position;
     private Integer parkingLotId;
     private double cost;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     // getters and setters
     public Integer getId() {
@@ -48,5 +51,20 @@ public class TicketVo {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

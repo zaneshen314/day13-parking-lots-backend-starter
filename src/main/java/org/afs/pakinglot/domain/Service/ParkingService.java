@@ -61,8 +61,8 @@ public class ParkingService {
         return ticketToVo(ticket);
     }
 
-    public TicketVo fetch(TicketBo ticket) {
-        Ticket ticketEntity = ticketRepository.findByPlateNumber(ticket.getPlateNumber());
+    public TicketVo fetch(TicketBo ticketBo) {
+        Ticket ticketEntity = ticketRepository.findByPlateNumber(ticketBo.getPlateNumber());
         if (ticketEntity == null) {
             throw new UnrecognizedTicketException();
         }
@@ -71,7 +71,12 @@ public class ParkingService {
         ticketRepository.deleteById(ticketEntity.getId());
 
         long durationInMinutes = java.time.Duration.between(ticketEntity.getStartTime(), ticketEntity.getEndTime()).toMinutes();
-        long hours = (durationInMinutes + 59) / 60;
+        TicketVo ticketVo = getTicketVo(durationInMinutes, ticketEntity);
+        return ticketVo;
+    }
+
+    private static TicketVo getTicketVo(long durationInMinutes, Ticket ticketEntity) {
+        long hours = Math.max(1, (durationInMinutes + 59) / 60); // Ensure at least 1 hour
         double cost = hours * 5.0;
 
         TicketVo ticketVo = new TicketVo();
@@ -80,6 +85,8 @@ public class ParkingService {
         ticketVo.setId(ticketEntity.getId());
         ticketVo.setParkingLotId(ticketEntity.getParkingLot().getId());
         ticketVo.setCost(cost);
+        ticketVo.setStartTime(ticketEntity.getStartTime());
+        ticketVo.setEndTime(ticketEntity.getEndTime());
         return ticketVo;
     }
 
