@@ -7,6 +7,8 @@ import org.afs.pakinglot.domain.entity.vo.ParkingLotVo;
 import org.afs.pakinglot.domain.entity.vo.TicketVo;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/parking")
 public class ParkingController {
