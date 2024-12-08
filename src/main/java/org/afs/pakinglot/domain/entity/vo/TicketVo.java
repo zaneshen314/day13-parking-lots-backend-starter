@@ -1,4 +1,4 @@
-package org.afs.pakinglot.domain.entity.Vo;
+package org.afs.pakinglot.domain.entity.vo;
 
 public class TicketVo {
     private Integer id;
