@@ -9,4 +9,6 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     Integer countByParkingLotId(Integer parkingLotId);
+
+    Ticket findByPlateNumber(String plateNumber);
 }

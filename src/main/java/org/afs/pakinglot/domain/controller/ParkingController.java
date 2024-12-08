@@ -1,6 +1,8 @@
 package org.afs.pakinglot.domain.controller;
 
 import org.afs.pakinglot.domain.Service.ParkingService;
+import org.afs.pakinglot.domain.entity.Car;
+import org.afs.pakinglot.domain.entity.vo.TicketVo;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -13,5 +15,10 @@ public class ParkingController {
     @GetMapping("/strategy")
     public List<String> getParkingStrategy() {
         return parkingService.getParkingStrategy();
+    }
+
+    @PostMapping("/park/{strategy}")
+    public TicketVo park(@RequestBody Car car, @PathVariable String strategy) {
+        return parkingService.park(car, strategy);
     }
 }
